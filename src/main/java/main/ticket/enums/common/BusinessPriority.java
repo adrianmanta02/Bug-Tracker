@@ -11,4 +11,12 @@ public enum BusinessPriority {
     public static BusinessPriority fromString(final String value) {
         return EnumUtils.fromString(BusinessPriority.class, value);
     }
+
+    public BusinessPriority next() {
+        return switch(this) {
+            case LOW -> MEDIUM;
+            case MEDIUM -> HIGH;
+            case HIGH, CRITICAL -> CRITICAL;
+        };
+    }
 }

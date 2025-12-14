@@ -3,10 +3,16 @@ package main.ticket;
 import main.ticket.enums.common.BusinessPriority;
 import main.ticket.enums.common.ExpertiseArea;
 import main.ticket.enums.common.TicketStatus;
+import main.ticket.enums.common.TicketType;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public abstract class Ticket {
     private int id;
-    private String type;
+    private TicketType type;
     private String title;
     private BusinessPriority businessPriority;
     private TicketStatus status;
@@ -17,7 +23,7 @@ public abstract class Ticket {
 
     public static abstract class TicketBuilder<T extends Ticket, B extends TicketBuilder<T,B>> {
         private int id;
-        private String type;
+        private TicketType type;
         private String title;
         private BusinessPriority businessPriority;
         private TicketStatus status;
@@ -26,7 +32,7 @@ public abstract class Ticket {
         private String description;
         private String reportedBy;
 
-        public TicketBuilder(final int id, final String type, final String title,
+        public TicketBuilder(final int id, final TicketType type, final String title,
                              final BusinessPriority businessPriority, final TicketStatus status,
                              final ExpertiseArea expertiseArea) {
             this.id = id;
