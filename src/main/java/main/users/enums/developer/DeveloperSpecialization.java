@@ -20,6 +20,11 @@ public enum DeveloperSpecialization {
         this.allowedAreas = allowedAreas;
     }
 
+    /**
+     * Checks if the allowed areas fields contain an expertise area given
+     * @param areaToHandle enum {@link ExpertiseArea} value to be checked
+     * @return a boolean verifying the matching.
+     */
     public boolean canHandleArea(final ExpertiseArea areaToHandle) {
         return allowedAreas.contains(areaToHandle);
     }

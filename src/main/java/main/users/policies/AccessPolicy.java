@@ -3,5 +3,8 @@ package main.users.policies;
 import main.ticket.Ticket;
 
 public interface AccessPolicy {
-    boolean canAccess(final Ticket ticket);
+    /**
+     * @see main.users.User#canAccess(Ticket)
+     */
+    boolean canAccess(Ticket ticket);
 }
