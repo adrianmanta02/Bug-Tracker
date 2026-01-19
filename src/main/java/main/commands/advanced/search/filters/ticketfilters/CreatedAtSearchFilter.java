@@ -10,7 +10,8 @@ public final class CreatedAtSearchFilter implements SearchFilterStrategy<Ticket>
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
     @Override
-    public boolean matches(final Ticket ticket, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Ticket ticket, final SearchFilter filter,
+                           final SearchContext context) {
         return filter.getCreatedAt() == null
                 || filter.getCreatedAt().equals(ticket.getCreatedAt());
     }

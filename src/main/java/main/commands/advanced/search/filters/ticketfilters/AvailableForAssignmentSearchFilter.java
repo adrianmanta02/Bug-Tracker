@@ -9,7 +9,8 @@ public final class AvailableForAssignmentSearchFilter implements SearchFilterStr
     /**
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
-    public boolean matches(final Ticket ticket, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Ticket ticket, final SearchFilter filter,
+                           final SearchContext context) {
         return !Boolean.TRUE.equals(filter.getAvailableForAssignment())
                 || (context.getUser().canAccess(ticket) && ticket.getAssignedTo().isEmpty());
     }

@@ -5,7 +5,6 @@ import lombok.Getter;
 import main.commands.Command;
 import main.commands.context.CommandContext;
 import main.commands.context.CommandResult;
-import main.commands.strategies.status.TicketStatusValidation;
 import main.ticket.Ticket;
 import main.ticket.utils.TicketContainer;
 import main.users.enums.common.Role;

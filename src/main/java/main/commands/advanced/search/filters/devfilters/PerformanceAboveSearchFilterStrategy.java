@@ -10,7 +10,8 @@ public final class PerformanceAboveSearchFilterStrategy implements SearchFilterS
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
     @Override
-    public boolean matches(final Developer itemToFilter, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Developer itemToFilter, final SearchFilter filter,
+                           final SearchContext context) {
         return itemToFilter.getPerformanceScore() == 0.0
                 || itemToFilter.getPerformanceScore() >= filter.getPerformanceScoreAbove();
     }

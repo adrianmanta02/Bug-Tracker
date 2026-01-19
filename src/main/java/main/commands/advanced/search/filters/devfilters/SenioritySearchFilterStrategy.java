@@ -10,7 +10,8 @@ public final class SenioritySearchFilterStrategy implements SearchFilterStrategy
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
     @Override
-    public boolean matches(final Developer itemToFilter, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Developer itemToFilter, final SearchFilter filter,
+                           final SearchContext context) {
         return itemToFilter.getSeniority() == null
                 || filter.getSeniority() == itemToFilter.getSeniority();
     }

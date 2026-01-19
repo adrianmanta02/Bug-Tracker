@@ -13,7 +13,8 @@ public final class DeveloperSearchStrategy implements SearchStrategy<TicketSearc
     /**
      * @see SearchStrategy#search(SearchFilter, SearchContext)
      */
-    public List<TicketSearchResultSimpleDTO> search(final SearchFilter filter, SearchContext searchContext) {
+    public List<TicketSearchResultSimpleDTO> search(final SearchFilter filter,
+                                                    final SearchContext searchContext) {
         final String devName = searchContext.getUser().getUsername();
         List<Milestone> milestonesAssigned = MilestoneContainer
                 .getInstance()

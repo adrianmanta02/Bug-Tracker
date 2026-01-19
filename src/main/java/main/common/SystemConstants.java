@@ -34,7 +34,11 @@ public final class SystemConstants {
 
     public static final double MAXIMUM_BUG_IMPACT = 48;
 
-    public static final double MINIMUM_COMMENT_LENGTH = 10;
+    public static final int MINIMUM_COMMENT_LENGTH = 10;
+
+    public static final int SENIOR_PERFORMANCE_BONUS = 30;
+    public static final int MID_PERFORMANCE_BONUS = 15;
+    public static final int JUNIOR_PERFORMANCE_BONUS = 5;
 
     public static final String SEARCH_TYPE_FIELD = "searchType";
     public static final String BUSINESS_PRIORITY_FIELD = "businessPriority";
@@ -53,4 +57,14 @@ public final class SystemConstants {
     public static final String RESULTS_FIELD = "results";
     public static final String TICKET_ID_FIELD = "ticketID";
     public static final String COMMENT_FIELD = "comment";
+    public static final String ASSIGNED_TICKETS_FIELD = "assignedTickets";
+    public static final String DEVELOPER_FIELD = "developer";
+    public static final String MILESTONES_FIELD = "milestones";
+    public static final String TICKETS_FIELD = "tickets";
+    public static final String REPORT_FIELD = "report";
+
+    public static final String ACTIVE_STATUS = "ACTIVE";
+    public static final String COMPLETED_STATUS = "COMPLETED";
+
+
 }

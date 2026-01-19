@@ -10,7 +10,8 @@ public final class BusinessPrioritySearchFilter implements SearchFilterStrategy<
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
     @Override
-    public boolean matches(final Ticket ticket, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Ticket ticket, final SearchFilter filter,
+                           final SearchContext context) {
         return filter.getBusinessPriority() == null
                 || filter.getBusinessPriority() == ticket.getBusinessPriority();
     }

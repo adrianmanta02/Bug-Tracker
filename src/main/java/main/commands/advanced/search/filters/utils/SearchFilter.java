@@ -2,7 +2,6 @@ package main.commands.advanced.search.filters.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;
-import main.commands.advanced.search.SearchCommand;
 import main.ticket.enums.common.BusinessPriority;
 import main.ticket.enums.common.TicketType;
 import main.users.enums.developer.DeveloperSpecialization;
@@ -15,7 +14,8 @@ import java.util.List;
 
 /**
  * main.commands.advanced.search.SearchFilter is a wrapper class for
- * grouping all filters provided in {@link SearchCommand}.
+ * grouping all filters provided in
+ * {@link main.commands.advanced.search.SearchCommand}.
  */
 @Getter
 public final class SearchFilter {

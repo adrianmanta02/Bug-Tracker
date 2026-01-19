@@ -10,7 +10,8 @@ public final class CreatedBeforeSearchFilter implements SearchFilterStrategy<Tic
      * @see SearchFilterStrategy#matches(Object, SearchFilter, SearchContext)
      */
     @Override
-    public boolean matches(final Ticket ticket, final SearchFilter filter, SearchContext context) {
+    public boolean matches(final Ticket ticket, final SearchFilter filter,
+                           final SearchContext context) {
         return filter.getCreatedBefore() == null
                 || ticket.getCreatedAt().isAfter(filter.getCreatedAfter());
     }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public final class DeveloperFilterBuilder implements FilterBuilder<Developer> {
     /**
-     * @see FilterBuilder#build(SearchFilter) 
+     * @see FilterBuilder#build(SearchFilter)
      */
     @Override
     public List<SearchFilterStrategy<Developer>> build(final SearchFilter filter) {

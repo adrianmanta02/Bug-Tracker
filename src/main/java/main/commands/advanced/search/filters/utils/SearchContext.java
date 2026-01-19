@@ -15,8 +15,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public final class SearchContext {
-    final User user;
-    final LocalDate timestamp;
+    private final User user;
+    private final LocalDate timestamp;
 
     public SearchContext(final User user,
                          final LocalDate timestamp) {
