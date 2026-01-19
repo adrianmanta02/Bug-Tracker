@@ -6,7 +6,6 @@ import main.commands.Command;
 import main.commands.CommandValidationStrategy;
 import main.commands.context.CommandContext;
 import main.commands.context.CommandResult;
-import main.commands.strategies.comment.AddCommentValidationFactory;
 
 import main.comment.Comment;
 import main.ticket.Ticket;
