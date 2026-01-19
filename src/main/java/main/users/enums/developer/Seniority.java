@@ -1,6 +1,6 @@
 package main.users.enums.developer;
 
-import main.common.enums.EnumUtils;
+import main.common.EnumUtils;
 
 public enum Seniority {
     JUNIOR,

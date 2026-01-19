@@ -1,7 +1,7 @@
 package main.ticket.enums.common;
 
 import lombok.Getter;
-import main.common.enums.EnumUtils;
+import main.common.EnumUtils;
 
 @Getter
 public enum BusinessPriority {

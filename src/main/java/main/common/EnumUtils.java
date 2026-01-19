@@ -1,4 +1,4 @@
-package main.common.enums;
+package main.common;
 
 import java.util.Arrays;
 

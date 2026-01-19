@@ -1,6 +1,6 @@
 package main.ticket.enums.common;
 
-import main.common.enums.EnumUtils;
+import main.common.EnumUtils;
 
 public enum TicketType {
     BUG,
