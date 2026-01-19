@@ -12,7 +12,6 @@ import main.ticket.enums.common.TicketType;
 
 import lombok.Getter;
 import lombok.Setter;
-import main.ticket.utils.ScoreCalculationStrategy;
 import main.comment.Comment;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -47,19 +46,15 @@ public abstract class Ticket {
 
     @JsonIgnore
     private double score;
-
-    @JsonIgnore
-    private ScoreCalculationStrategy scoreCalculationStrategy;
-
     private List<Comment> comments = new ArrayList<>();
 
     public static abstract class TicketBuilder<T extends Ticket, B extends TicketBuilder<T, B>> {
-        private int id;
-        private TicketType type;
-        private String title;
-        private BusinessPriority businessPriority;
-        private TicketStatus status;
-        private ExpertiseArea expertiseArea;
+        private final int id;
+        private final TicketType type;
+        private final String title;
+        private final BusinessPriority businessPriority;
+        private final TicketStatus status;
+        private final ExpertiseArea expertiseArea;
 
         private String description;
         private String reportedBy;

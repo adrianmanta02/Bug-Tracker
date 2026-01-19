@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static main.common.SystemConstants.TICKETS_FIELD;
+
 public final class CreateMilestoneCommand extends Command {
     private final JsonNode data;
     private final List<Integer> ticketIds;
@@ -23,7 +25,7 @@ public final class CreateMilestoneCommand extends Command {
     public CreateMilestoneCommand(final JsonNode node) {
         super(node);
         this.data = node;
-        this.ticketIds = ParserUtils.parseIntegerArray(node.get("tickets"));
+        this.ticketIds = ParserUtils.parseIntegerArray(node.get(TICKETS_FIELD));
     }
     /**
      * @see Command#getAllowedRoles()
@@ -51,7 +53,7 @@ public final class CreateMilestoneCommand extends Command {
     public CommandResult validateCommand(final CommandContext commandContext) {
         Optional<Milestone> milestoneWithConflict =
                 commandContext.getMilestoneService()
-                              .getConflctingMilestone(ticketIds);
+                              .getConflictingMilestone(ticketIds);
 
         if (milestoneWithConflict.isPresent()) {
             List<Integer> conflictingMilestoneTicketIds = milestoneWithConflict.get().getTickets();

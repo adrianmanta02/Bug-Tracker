@@ -62,6 +62,7 @@ public final class SystemConstants {
     public static final String MILESTONES_FIELD = "milestones";
     public static final String TICKETS_FIELD = "tickets";
     public static final String REPORT_FIELD = "report";
+    public static final String COMMAND_FIELD = "command";
 
     public static final String ACTIVE_STATUS = "ACTIVE";
     public static final String COMPLETED_STATUS = "COMPLETED";

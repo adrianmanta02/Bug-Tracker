@@ -1,9 +1,7 @@
 package main.milestone;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import main.milestone.state.LockedState;
@@ -16,6 +14,9 @@ import main.notification.UnlockNotification;
 import main.ticket.Ticket;
 import main.ticket.enums.common.TicketStatus;
 import main.ticket.utils.TicketContainer;
+
+import static main.common.SystemConstants.ASSIGNED_TICKETS_FIELD;
+import static main.common.SystemConstants.DEVELOPER_FIELD;
 
 public final class MilestoneService {
     private final TicketContainer ticketContainer;
@@ -107,14 +108,44 @@ public final class MilestoneService {
     }
 
     /**
-     * Checks if all tickets associated with the current Milestone are resolved.
-     *
-     * @return a boolean value showing if milestone has all tickets done or not
+     * Computes the distribution of tickets among the developers assigned to a milestone.
+     * For each assigned developer, this method collects the identifiers of the tickets
+     * currently assigned to them. Only tickets belonging to this milestone and having
+     * a valid assigned developer are considered.
+     * The resulting list is sorted by the number of assigned tickets in ascending order.
+     * If two developers have the same number of assigned tickets, they are ordered
+     * alphabetically by username.
+     * @param milestone the milestone for which the repartition is to be made
+     * @return a list of maps describing the ticket repartition per developer;
+     *         each map contains:
+     * {@code developer} the developer's username
+     * {@code assignedTickets} a list of ticket identifiers
      */
-    public boolean areAllTicketsResolved(final Milestone milestone) {
-        List<Ticket> activeAssociatedTickets = ticketContainer
-                .getActiveTicketsByIds(milestone.getTickets());
-        return activeAssociatedTickets.isEmpty();
+    public List<Map<String, Object>> getRepartitionForMilestone(final Milestone milestone) {
+        Map<String, List<Integer>> devToTickets = new HashMap<>();
+        milestone.getAssignedDevs()
+                .forEach(developerName ->
+                        devToTickets.put(developerName, new ArrayList<>()));
+
+        List<Ticket> ticketsAssociated = this.getTicketsForMilestone(milestone);
+        ticketsAssociated.forEach(ticket -> {
+            final String assignedTo = ticket.getAssignedTo();
+            if (assignedTo != null && devToTickets.containsKey(assignedTo)) {
+                devToTickets.get(assignedTo).add(ticket.getId());
+            }
+        });
+
+        return devToTickets.entrySet().stream()
+                .sorted(Comparator
+                        .comparingInt((Map.Entry<String, List<Integer>> e) -> e.getValue().size())
+                        .thenComparing(Map.Entry::getKey))
+                .map(entry -> {
+                    Map<String, Object> repartitionEntry = new LinkedHashMap<>();
+                    repartitionEntry.put(DEVELOPER_FIELD, entry.getKey());
+                    repartitionEntry.put(ASSIGNED_TICKETS_FIELD, entry.getValue());
+                    return repartitionEntry;
+                })
+                .toList();
     }
 
     /**
@@ -192,7 +223,7 @@ public final class MilestoneService {
      * @param ticketIds the list of ticket ids to be checked
      * @return the problematic {@link Milestone} if found, otherwise null.
      */
-    public Optional<Milestone> getConflctingMilestone(final List<Integer> ticketIds) {
+    public Optional<Milestone> getConflictingMilestone(final List<Integer> ticketIds) {
         return this.milestoneContainer
                 .getMilestoneList()
                 .stream()

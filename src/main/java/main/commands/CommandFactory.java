@@ -1,13 +1,13 @@
 package main.commands;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import main.commands.advanced.ViewNotificationsCommand;
+import main.commands.advanced.notifications.ViewNotificationsCommand;
 import main.commands.advanced.search.SearchCommand;
-import main.commands.comment.AddCommentCommand;
-import main.commands.comment.UndoAddCommentCommand;
+import main.commands.commentcommands.AddCommentCommand;
+import main.commands.commentcommands.UndoAddCommentCommand;
 import main.commands.flow.LostInvestorsCommand;
 import main.commands.flow.StartTestingPhaseCommand;
-import main.commands.milestone.CreateMilestoneCommand;
+import main.commands.milestonecommands.CreateMilestoneCommand;
 import main.commands.query.ViewAssignedTicketsCommand;
 import main.commands.query.ViewMilestonesCommand;
 import main.commands.query.ViewTicketsCommand;
@@ -21,7 +21,9 @@ import main.commands.ticket.ReportTicketCommand;
 import main.commands.ticket.UndoAssignTicketCommand;
 import main.commands.ticket.ChangeStatusCommand;
 import main.commands.ticket.UndoChangeStatusCommand;
-import main.commands.ticket.ViewTicketHistoryCommand;
+import main.commands.query.ViewTicketHistoryCommand;
+
+import static main.common.SystemConstants.COMMAND_FIELD;
 
 public final class CommandFactory {
     private static CommandFactory instance;
@@ -50,7 +52,7 @@ public final class CommandFactory {
      * commands.
      */
     public Command createCommand(final JsonNode jsonNode) {
-        String commandType = jsonNode.get("command").asText();
+        String commandType = jsonNode.get(COMMAND_FIELD).asText();
 
         return switch (commandType) {
             case "reportTicket" -> new ReportTicketCommand(jsonNode);

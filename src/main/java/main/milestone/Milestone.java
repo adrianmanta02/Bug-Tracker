@@ -3,11 +3,7 @@ package main.milestone;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Comparator;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
@@ -20,7 +16,7 @@ import main.ticket.Ticket;
 import main.ticket.enums.common.TicketStatus;
 import main.ticket.utils.TicketContainer;
 
-import static main.common.SystemConstants.NORMALIZATION_FACTOR;
+import static main.common.SystemConstants.*;
 
 @Getter
 @Setter
@@ -84,15 +80,7 @@ public final class Milestone {
     }
 
     /**
-     * Updates all tickets' priorities once few days. A milestone contains multiple tickets.
-     * @param timestamp current timestamp
-     */
-    public void updateTicketsPriorities(final LocalDate timestamp) {
-        this.state.updateTicketsPriorities(this, timestamp);
-    }
-
-    /**
-     * Checks if milestone just became complete and freezes the fields if so.
+     * Checks if milestone has just became complete and freezes the fields if so.
      * Should be called whenever a ticket status changes to CLOSED.
      * @param timestamp the timestamp when the last ticket was closed
      */
@@ -137,7 +125,7 @@ public final class Milestone {
         return ticketsAssociated
                 .stream()
                 .anyMatch(ticket -> ticket.getStatus() != TicketStatus.CLOSED)
-                ? "ACTIVE" : "COMPLETED";
+                ? ACTIVE_STATUS : COMPLETED_STATUS;
     }
 
     /**
@@ -150,50 +138,18 @@ public final class Milestone {
     }
 
     /**
-     * Computes the distribution of tickets among the developers assigned to this milestone.
-     * For each assigned developer, this method collects the identifiers of the tickets
-     * currently assigned to them. Only tickets belonging to this milestone and having
-     * a valid assigned developer are considered.
-     * The resulting list is sorted by the number of assigned tickets in ascending order.
-     * If two developers have the same number of assigned tickets, they are ordered
-     * alphabetically by username.
-     *
-     * @return a list of maps describing the ticket repartition per developer;
-     *         each map contains:
-     * {@code developer} the developer's username
-     * {@code assignedTickets} a list of ticket identifiers
+     * @see MilestoneService#getRepartitionForMilestone(Milestone) 
      */
+    @JsonGetter("repartition")
     public List<Map<String, Object>> getRepartition() {
-        Map<String, List<Integer>> devToTickets = new HashMap<>();
-        assignedDevs.forEach(developerName -> devToTickets.put(developerName, new ArrayList<>()));
-
         MilestoneService milestoneService = new MilestoneService();
-        List<Ticket> ticketsAssociated = milestoneService.getTicketsForMilestone(this);
-
-        ticketsAssociated.forEach(ticket -> {
-            final String assignedTo = ticket.getAssignedTo();
-            if (assignedTo != null && devToTickets.containsKey(assignedTo)) {
-                devToTickets.get(assignedTo).add(ticket.getId());
-            }
-        });
-
-        return devToTickets.entrySet().stream()
-                .sorted(Comparator
-                        .comparingInt((Map.Entry<String, List<Integer>> e) -> e.getValue().size())
-                        .thenComparing(Map.Entry::getKey))
-                .map(entry -> {
-                    Map<String, Object> repartitionEntry = new LinkedHashMap<>();
-                    repartitionEntry.put("developer", entry.getKey());
-                    repartitionEntry.put("assignedTickets", entry.getValue());
-                    return repartitionEntry;
-                })
-                .toList();
+        return milestoneService.getRepartitionForMilestone(this);
     }
 
     /**
      * Calculates the proportion of tickets that were solved
      * since the Milestone was first launched by the {@link main.users.Manager}.
-     * All tickets with a CLOSED status contribute to the increasing
+     * All tickets with a {@code CLOSED} status contribute to the increasing
      * of the percentage.
      * @return a double value representing the completion percentage;
      */
@@ -257,7 +213,7 @@ public final class Milestone {
 
     /**
      * Retrieves all Tickets contained by the Milestone which have
-     * their status set on OPEN. The result is a list with Tickets
+     * their status set on {@code OPEN}. The result is a list with Tickets
      * being in the same order they were assigned in the milestone,
      * having been filtered by {@link TicketStatus}
      * @return list of filtered tickets by status.

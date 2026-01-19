@@ -67,6 +67,9 @@ public final class App {
         objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
+        TicketContainer ticketContainer = TicketContainer.getInstance();
+        MilestoneContainer milestoneContainer = MilestoneContainer.getInstance();
+
         for (JsonNode commandNode : commandNodes) {
             if (!commandContext.isAppRunning()) {
                 break;
