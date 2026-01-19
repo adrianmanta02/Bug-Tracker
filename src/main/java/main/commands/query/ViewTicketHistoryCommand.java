@@ -1,11 +1,12 @@
-package main.commands.ticket;
+package main.commands.query;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import main.commands.Command;
 import main.commands.context.CommandContext;
 import main.commands.context.CommandResult;
-import main.commands.strategies.view.ViewStrategy;
-import main.commands.strategies.view.viewhistory.ViewHistoryStrategyFactory;
+import main.commands.query.strategies.ViewStrategy;
+import main.commands.query.strategies.viewhistory.ViewHistoryStrategyFactory;
+import main.commands.ticket.TicketHistoryDTO;
 import main.users.enums.common.Role;
 
 import java.util.List;
